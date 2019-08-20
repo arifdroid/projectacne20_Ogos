@@ -1,0 +1,111 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+buildscript {
+    ext {
+        buildToolsVersion = "28.0.3"
+        minSdkVersion = 16
+        compileSdkVersion = 28
+        targetSdkVersion = 28
+        googlePlayServicesVersion   = "12.0.1"
+        googlePlayServicesVisionVersion = "15.0.2"
+        supportLibVersion = "28.0.0"
+    }
+    repositories {
+        google()
+
+          maven {
+            url 'https://maven.google.com'
+        }
+
+        jcenter()
+
+
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:3.4.1")
+        classpath 'com.google.gms:google-services:4.0.1';
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+  compileSdkVersion safeExtGet('compileSdkVersion', 28)
+  buildToolsVersion safeExtGet('buildToolsVersion', '28.0.3')
+
+  defaultConfig {
+    minSdkVersion safeExtGet('minSdkVersion', 16)
+    targetSdkVersion safeExtGet('targetSdkVersion', 28)
+  }
+
+  flavorDimensions "react-native-camera"
+
+  productFlavors {
+    general {
+      dimension "react-native-camera"
+    }
+    mlkit {
+      dimension "react-native-camera"
+    }
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs = ['src/main/java']
+    }
+    general {
+      java.srcDirs = ['src/general/java']
+    }
+    mlkit {
+      java.srcDirs = ['src/mlkit/java']
+    }
+  }
+
+  lintOptions {
+    abortOnError false
+    warning 'InvalidPackage'
+  }
+}
+
+
+allprojects {
+    repositories {
+        mavenLocal()
+
+        maven { url "https://jitpack.io" }
+        maven { url "https://maven.google.com" }
+
+        maven {
+            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+            url("$rootDir/../node_modules/react-native/android")
+        }
+        maven {
+            // Android JSC is installed from npm
+            url("$rootDir/../node_modules/jsc-android/dist")
+        }
+
+        google()
+        jcenter()
+    }
+}
+
+dependencies {
+  def googlePlayServicesVisionVersion = safeExtGet('googlePlayServicesVisionVersion', safeExtGet('googlePlayServicesVersion', '17.0.2'))
+
+  implementation 'com.facebook.react:react-native:+'
+  implementation "com.google.zxing:core:3.3.3"
+  implementation "com.drewnoakes:metadata-extractor:2.11.0"
+  generalImplementation "com.google.android.gms:play-services-vision:$googlePlayServicesVisionVersion"
+  implementation "com.android.support:exifinterface:${safeExtGet('supportLibVersion', '28.0.0')}"
+  implementation "com.android.support:support-annotations:${safeExtGet('supportLibVersion', '28.0.0')}"
+  implementation "com.android.support:support-v4:${safeExtGet('supportLibVersion', '28.0.0')}"
+  mlkitImplementation "com.google.firebase:firebase-ml-vision:${safeExtGet('firebase-ml-vision', '19.0.3')}"
+  mlkitImplementation "com.google.firebase:firebase-ml-vision-face-model:${safeExtGet('firebase-ml-vision-face-model', '17.0.2')}"
+}
