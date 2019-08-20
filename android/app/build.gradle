@@ -199,6 +199,8 @@ dependencies {
     //firebase
     implementation 'com.google.firebase:firebase-analytics:17.0.1';
 
+    //file system
+    implementation project(':react-native-fs')
 
     if (enableHermes) {
       def hermesPath = "../../node_modules/hermesvm/android/";
