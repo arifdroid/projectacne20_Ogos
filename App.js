@@ -6,9 +6,17 @@
  * @flow
  */
 
+import TestComponent from './components/Test'; 
+
 import CameraTest from './components/CameraTest'; 
 
-import React, {Fragment} from 'react';
+import {createStackNavigator,createAppContainer} from 'react-navigation';
+
+import ScreenCamera from './components/ScreenCamera';
+
+import Skrinfirestore from './components/ScreenFireStore';
+
+import React, {Fragment, PureComponent} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -17,6 +25,7 @@ import {
   Text,
   StatusBar,
   Button, PermissionsAndroid,
+  
 } from 'react-native';
 
 import {
@@ -27,7 +36,48 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-class App extends React.Component{
+// setting up navigator 
+//  --------------------------
+
+const AppNavigator = createStackNavigator(
+  {
+    Test: TestComponent,
+     //notice, we need to use same, since its not gohome, its home only , defined as const
+    ScreenCamera: ScreenCamera,
+    ScreenFireStore: Skrinfirestore,
+
+  },{
+
+    initialRouteName: "Test"
+
+  });
+
+const AppContainer = createAppContainer(AppNavigator);
+
+
+// ------------------------
+
+
+// ------------------------> Home
+
+const Home =()=>{
+
+  return(
+
+    <View style={{justifyContent:'center', alignItems:'center', flex:1}}>
+    
+    <Button title='button test'></Button>
+    
+    </View>
+
+  )
+}
+
+
+
+// ------------------------
+
+class App extends React.PureComponent{
 
   constructor(){
     super();
@@ -75,20 +125,6 @@ class App extends React.Component{
 
   };
 
-  // if(requestPermission()===granted){  
-    
-  // return (
-
-
-
-  //   <View style={{flex:1}}>
-    
-  //   <CameraTest/>
-
-  //   </View>
-  // );
-
-  // };
 
   render(){
 
@@ -107,11 +143,11 @@ class App extends React.Component{
   return(
 
 
-    <View style={{flex:1}}>
     
-    <CameraTest/>
+    
+    <AppContainer/>
 
-    </View>
+    
 
   )
   }

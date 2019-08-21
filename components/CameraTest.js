@@ -115,7 +115,7 @@ export default class CameraTest extends PureComponent{
                    
                     ref={ ref =>{this.camera=ref;}}
                     style={styles.preview}
-                    type={RNCamera.Constants.Type.back}
+                    type={RNCamera.Constants.Type.front}
                   
                 />
                 
@@ -125,7 +125,7 @@ export default class CameraTest extends PureComponent{
                     style={styles.capture}
                     onPress={this._fungsiGambar}   
                     >
-                    <Text>SNAP</Text>
+                    <Text>CAPTURE</Text>
                     </TouchableOpacity>
                 </View>
                 

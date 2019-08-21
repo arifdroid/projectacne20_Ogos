@@ -7,6 +7,7 @@ import com.facebook.react.PackageList;
 import com.facebook.hermes.reactexecutor.HermesExecutorFactory;
 import com.facebook.react.bridge.JavaScriptExecutorFactory;
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.RNFirebasePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
@@ -14,6 +15,8 @@ import com.facebook.soloader.SoLoader;
 import com.rnfs.RNFSPackage; 
 
 import org.reactnative.camera.RNCameraPackage;
+
+import io.invertase.firebase.firestore.RNFirebaseFirestorePackage; 
 
 import java.util.List;
 
@@ -34,6 +37,7 @@ public class MainApplication extends Application implements ReactApplication {
       // Packages that cannot be autolinked yet can be added manually here, for example:
       // packages.add(new MyReactNativePackage());
       //packages.add(new RNCameraPackage());
+      packages.add(new RNFirebaseFirestorePackage());
 
       return packages;
     }
